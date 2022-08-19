@@ -32,9 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
         position: LatLng(27.716958, 85.325436),
         infoWindow: InfoWindow(title: 'Her Position')),
     Marker(
-        markerId: MarkerId('2'),
+        markerId: MarkerId('3'),
         position: LatLng(27.71058, 85.30436),
         infoWindow: InfoWindow(title: 'Her School')),
+    Marker(
+        markerId: MarkerId('4'),
+        position: LatLng(27.70058, 85.30036),
+        infoWindow: InfoWindow(title: 'My Office')),
   ];
 
   @override

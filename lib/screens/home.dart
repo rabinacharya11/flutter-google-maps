@@ -12,9 +12,10 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-Completer<GoogleMapController> _controller = Completer();
-
 class _HomeScreenState extends State<HomeScreen> {
+  Completer<GoogleMapController> _controller = Completer();
+  GoogleMapController? controller;
+  bool hello = false;
   static const CameraPosition _kInitalCameraPosition = CameraPosition(
     target: LatLng(27.716958, 85.325436),
     zoom: 14,
@@ -36,12 +37,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     _marker.addAll(_list);
+  }
+
+  @override
+  void dispose() {
+    controller!.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text(hello.toString())),
       body: GoogleMap(
         markers: Set<Marker>.of(_marker),
         compassEnabled: true,
@@ -49,24 +59,20 @@ class _HomeScreenState extends State<HomeScreen> {
         myLocationButtonEnabled: true,
         initialCameraPosition: _kInitalCameraPosition,
         mapType: MapType.normal,
-        onMapCreated: ((controller) {}),
+        onMapCreated: _controller.complete,
       ),
       floatingActionButton: FloatingActionButton(
-        child: IconButton(
-          icon: const Icon(Icons.ac_unit),
+          child: const Icon(Icons.ac_unit),
           onPressed: () async {
-            GoogleMapController controller = await _controller.future;
+            Future.delayed(const Duration(milliseconds: 500));
+            controller = await _controller.future;
+            controller!.animateCamera(
+                CameraUpdate.newCameraPosition(_kInitalCameraPosition));
 
-            controller.animateCamera(CameraUpdate.newCameraPosition(
-                const CameraPosition(target: LatLng(23.716958, 23), zoom: 14)));
-            setState(() {});
-            print("hello");
-          },
-        ),
-        onPressed: () async {
-          // print("hello");
-        },
-      ),
+            setState(() {
+              hello = false;
+            });
+          }),
     );
   }
 }

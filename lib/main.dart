@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_learning/screens/convert_lat_long.dart';
 import 'package:google_maps_learning/screens/home.dart';
 
 void main() {
@@ -15,7 +16,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen());
+        home: const ConvertLangLong());
   }
 }
-
